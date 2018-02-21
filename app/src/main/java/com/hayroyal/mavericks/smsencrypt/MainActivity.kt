@@ -44,25 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "SMS Encrypt"
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        //mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-        // Set up the ViewPager with the sections adapter.
-        //container.adapter = mSectionsPagerAdapter
-//        var rxx  = RxPermissions(this)
-//        rxx
-//                .request(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS)
-//                .subscribe({ granted ->
-//                    if (granted) {
-//                        // Always true pre-M
-//                    } else {
-//                        Log.e(TAG, "Not Accepted")
-//                        Toast.makeText(this,"Permission Denied!!!, Kindly restart app", Toast.LENGTH_SHORT).show()
-//                        System.exit(0)
-//                    }
-//                })
-
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
@@ -76,7 +57,6 @@ class MainActivity : AppCompatActivity() {
     private fun setUpTabs() {
         var viewPager = findViewById<ViewPager>(R.id.container)
         setupViewPager(viewPager)
-        val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
     }
 
