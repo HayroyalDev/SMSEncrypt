@@ -18,6 +18,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
+import com.hayroyal.mavericks.smsencrypt.Encryption.BlowfishJava
+import com.hayroyal.mavericks.smsencrypt.Encryption.Ecc
 import com.hayroyal.mavericks.smsencrypt.Fragments.InboxFragment
 import com.hayroyal.mavericks.smsencrypt.Fragments.SentFragment
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -44,13 +47,20 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "SMS Encrypt"
+        //Ecc.generate()
+        var data = Blowfish.encrypt("Hello Sweet Heart, How are you doing? I miss you. This is a test message","key")
+        //var data = BlowfishJava().encrypt("Data to be encrypted", "key")
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show()
+        var ddata = Blowfish.decrypt(data,"key")
+        //var data = BlowfishJava().encrypt("Data to be encrypted", "key")
+        Toast.makeText(this, ddata, Toast.LENGTH_LONG).show()
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         fab.setOnClickListener { view ->
             startActivity(Intent(this, NewActivity::class.java))
         }
-        setUpTabs()
+        //setUpTabs()
 
     }
 
@@ -60,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
     }
 
-    fun setupViewPager(viewPager: ViewPager){
+    private fun setupViewPager(viewPager: ViewPager){
         val adapter = Adapter(supportFragmentManager)
         adapter.addFragment(InboxFragment(), "Inbox")
         adapter.addFragment(SentFragment(), "Sent")
@@ -87,11 +97,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     private class Adapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
@@ -115,36 +120,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    class PlaceholderFragment : Fragment() {
-
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                                  savedInstanceState: Bundle?): View? {
-            val rootView = inflater.inflate(R.layout.fragment_main, container, false)
-            rootView.section_label.text = getString(R.string.section_format, arguments.getInt(ARG_SECTION_NUMBER))
-            return rootView
-        }
-
-        companion object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
-            private val ARG_SECTION_NUMBER = "section_number"
-
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
-            fun newInstance(sectionNumber: Int): PlaceholderFragment {
-                val fragment = PlaceholderFragment()
-                val args = Bundle()
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
-                fragment.arguments = args
-                return fragment
-            }
-        }
-    }
 }
