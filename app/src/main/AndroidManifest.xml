@@ -32,7 +32,6 @@
             android:name=".NewActivity"
             android:label="@string/title_activity_new"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ExampleActivity"></activity>
     </application>
 
 </manifest>

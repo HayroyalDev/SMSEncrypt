@@ -1,9 +1,7 @@
 package com.hayroyal.mavericks.smsencrypt
 
-import android.Manifest
 import android.content.Intent
 import android.support.design.widget.TabLayout
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
@@ -12,22 +10,13 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
-import com.hayroyal.mavericks.smsencrypt.Encryption.BlowfishJava
-import com.hayroyal.mavericks.smsencrypt.Encryption.Ecc
-import com.hayroyal.mavericks.smsencrypt.Encryption.GenerateKey
 import com.hayroyal.mavericks.smsencrypt.Fragments.InboxFragment
 import com.hayroyal.mavericks.smsencrypt.Fragments.SentFragment
-import com.tbruyelle.rxpermissions2.RxPermissions
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             startActivity(Intent(this, NewActivity::class.java))
         }
         setUpTabs()

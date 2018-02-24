@@ -25,9 +25,7 @@ class Blowfish{
                 cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
                 val encrypted = cipher.doFinal(data.toByteArray())
                 retVal = String(Base64.encode(encrypted, Base64.NO_WRAP))
-                Log.e(TAG, "encrypt: " + retVal)
             } catch (ex: Exception) {
-                println("Exception in CryptoUtil.encrypt():")
                 ex.printStackTrace()
                 retVal = null
             } finally {

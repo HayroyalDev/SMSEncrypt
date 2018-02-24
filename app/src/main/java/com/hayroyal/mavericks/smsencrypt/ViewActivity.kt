@@ -1,17 +1,11 @@
 package com.hayroyal.mavericks.smsencrypt
 
-import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
-import com.hayroyal.mavericks.smsencrypt.Encryption.BlowfishJava
 import com.hayroyal.mavericks.smsencrypt.Helper.Sms
-import com.tbruyelle.rxpermissions2.RxPermissions
 
 import kotlinx.android.synthetic.main.activity_view.*
 
@@ -53,7 +47,7 @@ class ViewActivity : AppCompatActivity() {
                     }else{
                         key = split[0]
                         var smsg = split[1]
-                        emsg = BlowfishJava().decrypt(smsg, key)
+                        emsg = Blowfish.decrypt(smsg, key!!)
                         if(emsg == null){
                             Snackbar.make(cood, "Message is not Encrypted.", Snackbar.LENGTH_LONG).show()
                         }else{
@@ -68,7 +62,7 @@ class ViewActivity : AppCompatActivity() {
                     if(split.isEmpty()){
                         Snackbar.make(cood, "Message can\' be encrypted.", Snackbar.LENGTH_LONG).show()
                     }else{
-                        emsg = BlowfishJava().encrypt(msg.text.toString(), split[0])
+                        emsg = Blowfish.encrypt(msg.text.toString(), split[0])
                         msg.text = emsg
                         encr = true
                         enc.text = "Decrypt Message"
