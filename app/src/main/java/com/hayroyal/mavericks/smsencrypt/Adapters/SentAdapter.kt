@@ -21,6 +21,11 @@ class SentAdapter(context: Context, results: ArrayList<Sms>) : BaseAdapter() {
         return smsChar.size
     }
 
+    fun swapData(list : ArrayList<Sms>){
+        smsChar = list
+        notifyDataSetChanged()
+    }
+
     override fun getItem(position: Int): Any {
         return smsChar[position]
     }

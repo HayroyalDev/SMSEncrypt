@@ -26,11 +26,13 @@
         <activity
             android:name=".ViewActivity"
             android:label="@string/title_activity_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".NewActivity"
             android:label="@string/title_activity_new"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ExampleActivity"></activity>
     </application>
 
 </manifest>

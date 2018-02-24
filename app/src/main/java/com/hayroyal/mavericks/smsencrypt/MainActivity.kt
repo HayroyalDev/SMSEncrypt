@@ -21,6 +21,7 @@ import android.widget.Toast
 import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
 import com.hayroyal.mavericks.smsencrypt.Encryption.BlowfishJava
 import com.hayroyal.mavericks.smsencrypt.Encryption.Ecc
+import com.hayroyal.mavericks.smsencrypt.Encryption.GenerateKey
 import com.hayroyal.mavericks.smsencrypt.Fragments.InboxFragment
 import com.hayroyal.mavericks.smsencrypt.Fragments.SentFragment
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -47,20 +48,17 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar!!.title = "SMS Encrypt"
-        //Ecc.generate()
-        var data = Blowfish.encrypt("Hello Sweet Heart, How are you doing? I miss you. This is a test message","key")
-        //var data = BlowfishJava().encrypt("Data to be encrypted", "key")
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show()
-        var ddata = Blowfish.decrypt(data,"key")
-        //var data = BlowfishJava().encrypt("Data to be encrypted", "key")
-        Toast.makeText(this, ddata, Toast.LENGTH_LONG).show()
+        var data = Blowfish.encrypt("Hello Sweet Heart, How are you doing? I miss you. This is a test message", "key")
+        Log.e(TAG, data)
+//        var dataa = GenerateKey.generate()
+//        Log.e(TAG, dataa + "data")
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         fab.setOnClickListener { view ->
             startActivity(Intent(this, NewActivity::class.java))
         }
-        //setUpTabs()
+        setUpTabs()
 
     }
 

@@ -31,38 +31,41 @@ class SentFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view : View = inflater!!.inflate(R.layout.fragment_sent, container, false);
+        var view : View = inflater!!.inflate(R.layout.fragment_sent, container, false)
+        sentList = ArrayList()
         var listView = view.findViewById<ListView>(R.id.sentlist)
+        adapter = SentAdapter(activity, sentList!!)
+        listView.adapter = adapter
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val o = listView.getItemAtPosition(position)
+            val fullObject = o as Sms
+            val intent = Intent(activity,ViewActivity::class.java).apply {
+                putExtra("address", fullObject.address)
+                        .putExtra("body", fullObject.message)
+                        .putExtra("type", "sent")
+                        .putExtra("date", fullObject.date)
+            }
+            getPermAndList()
+            startActivity(intent)
+        }
+        return view
+    }
+
+    fun getPermAndList(){
         var rxx  = RxPermissions(activity)
         rxx
                 .request(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS)
                 .subscribe({ granted ->
                     if (granted) {
                         sentList = getSentSms()
-                        adapter = SentAdapter(activity, sentList!!)
-                        listView.adapter = adapter
-                        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                            val o = listView.getItemAtPosition(position)
-                            val fullObject = o as Sms
-                            //Log.i("Hymn Details", fullObject.getTitle() + String.valueOf(fullObject.getID()));
-                            //Toast.makeText(getActivity(), "You have chosen: " + " " + fullObject.getID(), Toast.LENGTH_LONG).show();
-                            val intent = Intent(activity,ViewActivity::class.java).apply {
-                                putExtra("address", fullObject.address)
-                                        .putExtra("body", fullObject.message)
-                                        .putExtra("type", "sent")
-                                        .putExtra("time", fullObject.date)
-                            }
-                            startActivity(intent)
-                        }
                     }
                     else {
-                        Log.e(TAG, "Not Accepted")
+                        //Log.e(TAG, "Not Accepted")
                         Toast.makeText(activity,"Permission Denied!!!, Kindly restart app", Toast.LENGTH_SHORT).show()
                         System.exit(0)
                     }
                 })
 
-        return view
     }
 
     fun getSentSms(): ArrayList<Sms>? {
@@ -81,23 +84,30 @@ class SentFragment : Fragment() {
                 sms.address = smsInboxCursor.getString(indexAddress)
                 sms.message = smsInboxCursor.getString(indexBody)
                 sms.date = convertTime(smsInboxCursor.getLong(indexDate))
+                sms.type = "Sent"
                 list.add(sms)
-                val str = "SMS From: " + smsInboxCursor.getString(indexAddress) +
-                        "\n" + smsInboxCursor.getString(indexBody) + "\n"
-                Log.e(TAG, str)
-                Log.e(TAG, sms.date)
             } while (smsInboxCursor.moveToNext())
-            Log.e(TAG, "True")
+            //Log.e(TAG, "True")
         }
 
         return list
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getPermAndList()
+        Log.e(TAG, sentList.toString())
+        adapter?.notifyDataSetChanged()
+
+        adapter!!.swapData(sentList!!)
+
     }
 
     fun convertTime(time: Long) :String{
 // convert seconds to milliseconds
         val date = Date(time)
 // the format of your date
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
 // give a timezone reference for formatting (see comment at the bottom)
         sdf.timeZone = TimeZone.getTimeZone("GMT+1")
         return sdf.format(date)

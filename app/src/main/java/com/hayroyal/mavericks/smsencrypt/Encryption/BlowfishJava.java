@@ -1,5 +1,6 @@
 package com.hayroyal.mavericks.smsencrypt.Encryption;
 
+import android.util.Base64;
 import android.util.Log;
 
 import javax.crypto.Cipher;
@@ -16,16 +17,12 @@ public class BlowfishJava {
         String retVal = null;
         try
         {
-            SecretKeySpec skeySpec = getSecretKeySpec(key);
-            Log.e(TAG, "encrypt: " + skeySpec.toString());
-
+            SecretKeySpec secretKeySpec = getSecretKeySpec(key);
             // Instantiate the cipher.
             Cipher cipher = Cipher.getInstance(algorithm);
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-
-            //byte[] encrypted = cipher.doFinal( URLEncoder.encode(data).getBytes() );
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal( data.getBytes() );
-            retVal = new String(encrypted);
+            retVal = new String(Base64.encode(encrypted, Base64.NO_WRAP));
             Log.e(TAG, "encrypt: " + retVal);
         }
         catch (Exception ex)
@@ -40,13 +37,25 @@ public class BlowfishJava {
         }
     }
 
-    void decrypt(String data, String key){
-
+    public String decrypt(String data, String key) {
+       try{
+           byte [] dec = (Base64.decode(data, Base64.NO_WRAP));
+           SecretKeySpec secretKeySpec = getSecretKeySpec(key);
+           Cipher cipher = Cipher.getInstance("Blowfish");
+           cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+           byte[] hasil = cipher.doFinal(dec);
+           Log.e(TAG, new String(hasil));
+           return new String(hasil);
+       }catch (Exception ex){
+           System.out.println("Exception in CryptoUtil.encrypt():");
+           ex.printStackTrace();
+           return null;
+       }
     }
 
     private SecretKeySpec getSecretKeySpec(String key) throws Exception
     {
-        SecretKeySpec skeySpec = new SecretKeySpec( key.getBytes(), "EC" );
+        SecretKeySpec skeySpec = new SecretKeySpec( key.getBytes(), "ecc" );
         return skeySpec;
     }
 }

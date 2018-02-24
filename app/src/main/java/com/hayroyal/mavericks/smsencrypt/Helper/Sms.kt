@@ -9,6 +9,9 @@ class Sms {
     var message: String? = null
     var type: String? = null
     var date: String? = null
+    override fun toString(): String {
+        return "Sms(address=$address, message=$message, type=$type, date=$date)"
+    }
 
 
 }
