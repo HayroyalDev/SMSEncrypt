@@ -14,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import com.hayroyal.mavericks.smsencrypt.Adapters.SentAdapter
+import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
 import com.hayroyal.mavericks.smsencrypt.Helper.Sms
 
 import com.hayroyal.mavericks.smsencrypt.R
@@ -85,7 +86,11 @@ class SentFragment : Fragment() {
                 sms.message = smsInboxCursor.getString(indexBody)
                 sms.date = convertTime(smsInboxCursor.getLong(indexDate))
                 sms.type = "Sent"
-                list.add(sms)
+                var split = sms.message!!.split(Blowfish.sep)
+                if(split.isEmpty() || split.size == 1){
+                } else{
+                    list.add(sms)
+                }
             } while (smsInboxCursor.moveToNext())
             //Log.e(TAG, "True")
         }

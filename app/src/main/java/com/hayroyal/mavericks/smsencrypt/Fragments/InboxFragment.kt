@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,11 +17,13 @@ import android.widget.ListView
 import android.widget.Toast
 import com.hayroyal.mavericks.smsencrypt.Adapters.InboxAdapter
 import com.hayroyal.mavericks.smsencrypt.Adapters.SentAdapter
+import com.hayroyal.mavericks.smsencrypt.Encryption.Blowfish
 import com.hayroyal.mavericks.smsencrypt.Helper.Sms
 
 import com.hayroyal.mavericks.smsencrypt.R
 import com.hayroyal.mavericks.smsencrypt.ViewActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
+import kotlinx.android.synthetic.main.activity_view.*
 import kotlinx.android.synthetic.main.fragment_inbox.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -95,7 +98,11 @@ class InboxFragment : Fragment() {
                 sms.message = smsInboxCursor.getString(indexBody)
                 sms.date = convertTime(smsInboxCursor.getLong(indexDate))
                 sms.type = "Inbox"
-                list.add(sms)
+                var split = sms.message!!.split(Blowfish.sep)
+                if(split.isEmpty() || split.size == 1){
+                } else{
+                    list.add(sms)
+                }
                 //Log.e(TAG, sms.toString())
                 //Log.e(TAG, sms.date)
             } while (smsInboxCursor.moveToNext())

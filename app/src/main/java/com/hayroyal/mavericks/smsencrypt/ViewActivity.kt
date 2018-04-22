@@ -42,9 +42,9 @@ class ViewActivity : AppCompatActivity() {
             enc.setOnClickListener({
                 if(encr){
                     var split = sms!!.message!!.split(Blowfish.sep)
-                    if(split.isEmpty()){
+                    if(split.isEmpty() || split.size == 1){
                         Toast.makeText(this, "Message is Not Encrypted", Toast.LENGTH_LONG).show()
-                    }else{
+                    } else{
                         key = split[0]
                         var smsg = split[1]
                         emsg = Blowfish.decrypt(smsg, key!!)

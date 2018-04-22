@@ -3,14 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_test">Test</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_view">ViewActivity</string>
     <string name="title_activity_new">NewActivity</string>
-    <string name="decrypt_and_send_message">Decrypt and Send Message</string>
+    <string name="encrypt_and_send_message">Encrypt and Send Message</string>
 </resources>

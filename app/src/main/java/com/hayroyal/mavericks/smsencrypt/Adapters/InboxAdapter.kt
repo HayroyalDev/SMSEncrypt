@@ -33,22 +33,22 @@ class InboxAdapter(context: Context, results: ArrayList<Sms>) : BaseAdapter() {
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+        var cView = convertView
         val holder: ViewHolder
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.sent_row, null)
+        if (cView == null) {
+            cView = mInflater.inflate(R.layout.inbox_row, null)
             holder = ViewHolder()
-            holder.address = convertView!!.findViewById(R.id.sent_to)
-            holder.msg = convertView
+            holder.address = cView!!.findViewById(R.id.sent_to)
+            holder.msg = cView
                     .findViewById(R.id.msg)
-            convertView.tag = holder
+            cView.tag = holder
         } else {
-            holder = convertView.tag as ViewHolder
+            holder = cView.tag as ViewHolder
         }
         holder.address!!.text = smsChar[position].address
         holder.msg!!.text = smsChar[position].message
 
-        return convertView
+        return cView
     }
 
 

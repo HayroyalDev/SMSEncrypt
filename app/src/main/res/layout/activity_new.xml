@@ -70,7 +70,7 @@
         android:background="@color/colorPrimaryDark"
         android:textColor="#fff"
         android:elevation="4dp"
-        android:text="@string/decrypt_and_send_message"
+        android:text="@string/encrypt_and_send_message"
         android:layout_gravity="bottom|center_horizontal"
         />
 

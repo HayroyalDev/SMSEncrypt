@@ -34,8 +34,8 @@ class SentAdapter(context: Context, results: ArrayList<Sms>) : BaseAdapter() {
         return smsChar.size.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
+    override fun getView(position: Int, altView: View?, parent: ViewGroup): View {
+        var convertView = altView
         val holder: ViewHolder
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.sent_row, null)

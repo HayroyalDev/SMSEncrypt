@@ -9,7 +9,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.hayroyal.mavericks.smsencrypt"
-        minSdkVersion 16
+        minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
